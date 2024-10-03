@@ -59,8 +59,24 @@ candidatosRoutes.post("/", (req, res) => {
         message: "Candidato cadastrado com sucesso!",
         novoCandidato,
     });
-
 });
+
+candidatosRoutes.get("/:id", (req, res) => {
+    const { id } = req.params;
+
+    const candidatos = candidatos.find((politico) => politico.id == id );
+
+    if(!candidato) {
+        return res.status(404).json({ message: "Candidato não encontrado!"});
+    }
+
+    return res.status(200).json(candidato);
+});
+
+candidatosRoutes.put("/:id", (req, res) => {
+    const { id } = req.params;
+    const { name, email } = req.body;
+})
 
 
 
