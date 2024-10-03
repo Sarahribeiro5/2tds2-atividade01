@@ -4,7 +4,7 @@ const candidatosRoutes = Router();
 
 let candidatos = [
    {
-    id: Math.random() *1000000,
+    id: Math.floor(Math.random() * 1000000),
     nome: "Capitã Lucimara Fake",
     partido: "PSD",
     idade: 42,
@@ -20,6 +20,58 @@ let candidatos = [
 candidatosRoutes.get("/", (req, res) => {
     return res.status(200).json(candidatos);
 });
+
+candidatosRoutes.post("/", (req, res) => {
+    const {
+        nome,
+        partido,
+        idade,
+        segundo,
+        propostas,
+    } = req.body;
+
+    // Validação dos campos nome e partido
+    if (!nome || !partido) {
+        return res.status(400).send({
+            message: "O nome ou o partido não foi preenchido, criança aleatória!",
+        });
+    }
+
+    // Validação de idade 
+    if (idade < 18) {
+        return res.status(400).send({
+            message: " O candidato não possui idade suficiente para participar deste debate!",
+        });
+    }
+
+    const novoCandidato = {
+        id: Math.floor(Math.random() * 1000000),
+        nome,
+        partido,
+        idade,
+        segundo,
+        propostas,
+    };
+
+    candidatos.push(novoCandidato);
+
+    return res.status(201).json({
+        message: "Candidato cadastrado com sucesso!",
+        novoCandidato,
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 
